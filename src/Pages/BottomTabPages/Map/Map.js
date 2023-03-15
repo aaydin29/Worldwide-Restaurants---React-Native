@@ -15,34 +15,73 @@ const App = () => {
 
   const renderRestaurantsMarker = () => {
     if (data && data.results) {
-      return data.results.map(({geometry, name, place_id, photos, rating}) => {
-        return (
-          <Marker
-            key={place_id}
-            coordinate={{
-              latitude: geometry.location.lat,
-              longitude: geometry.location.lng,
-            }}
-            title={name}
-            onPress={() =>
-              handleMarkerSelect({geometry, name, place_id, photos, rating})
-            }
-          />
-        );
-      });
+      return data.results.map(
+        ({
+          geometry,
+          name,
+          place_id,
+          photos,
+          rating,
+          formatted_address,
+          user_ratings_total,
+          opening_hours,
+          icon,
+        }) => {
+          return (
+            <Marker
+              key={place_id}
+              coordinate={{
+                latitude: geometry.location.lat,
+                longitude: geometry.location.lng,
+              }}
+              title={name}
+              onPress={() =>
+                handleMarkerSelect({
+                  geometry,
+                  name,
+                  place_id,
+                  photos,
+                  rating,
+                  formatted_address,
+                  user_ratings_total,
+                  opening_hours,
+                  icon,
+                })
+              }
+            />
+          );
+        },
+      );
     } else {
       return null;
     }
   };
 
-  const handleMarkerSelect = ({geometry, name, place_id, photos, rating}) => {
+  const handleMarkerSelect = ({
+    geometry,
+    name,
+    photos,
+    rating,
+    formatted_address,
+    user_ratings_total,
+    opening_hours,
+    icon,
+  }) => {
     mapRef.current.animateToRegion({
       latitude: geometry.location.lat,
       longitude: geometry.location.lng,
       latitudeDelta: 0.5,
       longitudeDelta: 0.5,
     });
-    setSelectedRestaurant({geometry, name, place_id, photos, rating});
+    setSelectedRestaurant({
+      name,
+      photos,
+      rating,
+      formatted_address,
+      user_ratings_total,
+      opening_hours,
+      icon,
+    });
     setModalVisible(true);
   };
 
