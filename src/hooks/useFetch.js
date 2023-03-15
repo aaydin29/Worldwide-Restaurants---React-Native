@@ -8,16 +8,13 @@ export default function useFetch() {
 
   useEffect(() => {
     const fetchData = async () => {
-      const url = 'https://api.yelp.com/v3/businesses/search';
+      const url = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
       const config = {
-        headers: {
-          Authorization: `Bearer ${Config.API_KEY}`,
-        },
         params: {
-          term: 'restaurants',
-          location: 'San Francisco',
-          categories: 'all',
-          sort_by: 'rating',
+          query: 'restaurants',
+          location: `${Math.random() * 90 - 45},${Math.random() * 180 - 90}`,
+          radius: 500000,
+          key: Config.API_KEY,
         },
       };
 
