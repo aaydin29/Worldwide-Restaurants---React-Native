@@ -13,7 +13,7 @@ export default function useFetch() {
         params: {
           query: 'restaurants',
           location: `${Math.random() * 90 - 45},${Math.random() * 180 - 90}`,
-          radius: 500000,
+          radius: 5000000,
           key: Config.API_KEY,
         },
       };
