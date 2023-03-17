@@ -3,6 +3,7 @@ import {NavigationContainer} from '@react-navigation/native';
 import {createBottomTabNavigator} from '@react-navigation/bottom-tabs';
 import {createStackNavigator} from '@react-navigation/stack';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import FlashMessage from 'react-native-flash-message';
 
 import Map from './Pages/BottomTabPages/Map/Map';
 import Favorites from './Pages/BottomTabPages/Favorites/Favorites';
@@ -29,6 +30,7 @@ const Router = () => {
       <Stack.Navigator screenOptions={{headerShown: false}}>
         <Stack.Screen name="BottomTabPages" component={BottomTabPages} />
       </Stack.Navigator>
+      <FlashMessage position="top" />
     </NavigationContainer>
   );
 };
