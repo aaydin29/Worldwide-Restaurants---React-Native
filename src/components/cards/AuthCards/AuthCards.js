@@ -4,6 +4,7 @@ import {Formik} from 'formik';
 import auth from '@react-native-firebase/auth';
 import {showMessage} from 'react-native-flash-message';
 
+import styles from './AuthCards.style';
 import authErrorMessages from '../../../utils/authErrorMessages';
 
 const initialLoginFormValues = {
@@ -27,6 +28,7 @@ const AuthCards = ({activeTab}) => {
       showMessage({
         message: authErrorMessages(error.code),
         type: 'danger',
+        floating: true,
       });
     }
   }
@@ -35,6 +37,7 @@ const AuthCards = ({activeTab}) => {
       showMessage({
         message: 'Passwords must match!',
         type: 'danger',
+        floating: true,
       });
       return;
     }
@@ -46,33 +49,38 @@ const AuthCards = ({activeTab}) => {
       showMessage({
         message: 'Account created successfully!',
         type: 'success',
+        floating: true,
       });
     } catch (error) {
       showMessage({
         message: authErrorMessages(error.code),
         type: 'danger',
+        floating: true,
       });
     }
   }
 
   if (activeTab === 'login') {
     return (
-      <View>
+      <View style={styles.container}>
         <Formik initialValues={initialLoginFormValues} onSubmit={handleLogin}>
           {({values, handleChange, handleSubmit}) => (
             <>
               <TextInput
+                style={styles.inputs}
                 placeholder="E-mail"
                 value={values.email}
                 onChangeText={handleChange('email')}
               />
               <TextInput
+                style={styles.inputs}
                 placeholder="Password"
                 value={values.password}
                 onChangeText={handleChange('password')}
+                secureTextEntry
               />
-              <TouchableOpacity onPress={handleSubmit}>
-                <Text>Login</Text>
+              <TouchableOpacity onPress={handleSubmit} style={styles.buttons}>
+                <Text style={styles.button_text}>Login</Text>
               </TouchableOpacity>
             </>
           )}
@@ -81,29 +89,34 @@ const AuthCards = ({activeTab}) => {
     );
   } else {
     return (
-      <View>
+      <View style={styles.container}>
         <Formik
           initialValues={initialRegisterFormValues}
           onSubmit={handleRegister}>
           {({values, handleChange, handleSubmit}) => (
             <>
               <TextInput
+                style={styles.inputs}
                 placeholder="E-mail"
                 value={values.email}
                 onChangeText={handleChange('email')}
               />
               <TextInput
+                style={styles.inputs}
                 placeholder="Password"
                 value={values.password}
                 onChangeText={handleChange('password')}
+                secureTextEntry
               />
               <TextInput
-                placeholder="Password again"
+                style={styles.inputs}
+                placeholder="Repassword"
                 value={values.repassword}
                 onChangeText={handleChange('repassword')}
+                secureTextEntry
               />
-              <TouchableOpacity onPress={handleSubmit}>
-                <Text>Register</Text>
+              <TouchableOpacity onPress={handleSubmit} style={styles.buttons}>
+                <Text style={styles.button_text}>Register</Text>
               </TouchableOpacity>
             </>
           )}

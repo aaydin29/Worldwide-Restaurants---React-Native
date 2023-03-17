@@ -13,12 +13,20 @@ export default StyleSheet.create({
     flexDirection: 'row',
     alignItems: 'center',
     justifyContent: 'space-around',
+    paddingTop: 5,
   },
   tab_buttons: {
     padding: 10,
     borderBottomWidth: 0,
   },
   active_tab_buttons: {
-    borderBottomWidth: 2,
+    borderBottomWidth: 2.5,
+    fontSize: 18,
+    fontWeight: 'bold',
+  },
+  tabs_title: {
+    fontSize: 18,
+    fontWeight: 'bold',
+    color: '#263238',
   },
 });

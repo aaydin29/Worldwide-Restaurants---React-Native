@@ -5,6 +5,9 @@ export default StyleSheet.create({
     backgroundColor: '#263238',
     padding: 10,
     alignItems: 'center',
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    paddingHorizontal: 20,
   },
   header_text: {
     color: 'white',

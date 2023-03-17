@@ -10,6 +10,7 @@ const AuthModal = ({isVisible, onClose}) => {
 
   return (
     <Modal
+      backdropOpacity={0.6}
       isVisible={isVisible}
       swipeDirection="down"
       onSwipeComplete={onClose}
@@ -23,7 +24,7 @@ const AuthModal = ({isVisible, onClose}) => {
               activeTab === 'login' && styles.active_tab_buttons,
             ]}
             onPress={() => setActiveTab('login')}>
-            <Text>Login</Text>
+            <Text style={styles.tabs_title}>Login</Text>
           </TouchableOpacity>
           <TouchableOpacity
             style={[
@@ -31,7 +32,7 @@ const AuthModal = ({isVisible, onClose}) => {
               activeTab === 'register' && styles.active_tab_buttons,
             ]}
             onPress={() => setActiveTab('register')}>
-            <Text>Register</Text>
+            <Text style={styles.tabs_title}>Register</Text>
           </TouchableOpacity>
         </View>
         {<AuthCards activeTab={activeTab} />}
