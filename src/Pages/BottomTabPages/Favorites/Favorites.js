@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity} from 'react-native';
+import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {showMessage} from 'react-native-flash-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -43,7 +43,7 @@ const Favorites = () => {
   }
 
   return (
-    <View>
+    <ScrollView>
       <View style={styles.header_container}>
         <Text style={styles.header_text}>Favorites</Text>
         <Icon name="logout" size={30} color="white" onPress={handleLogout} />
@@ -58,7 +58,7 @@ const Favorites = () => {
           onClose={() => setModalVisible(false)}
         />
       )}
-    </View>
+    </ScrollView>
   );
 };
 
