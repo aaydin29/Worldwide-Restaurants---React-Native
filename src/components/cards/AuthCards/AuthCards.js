@@ -24,6 +24,11 @@ const AuthCards = ({activeTab}) => {
         formValues.email,
         formValues.password,
       );
+      showMessage({
+        message: 'Login successful!',
+        type: 'success',
+        floating: true,
+      });
     } catch (error) {
       showMessage({
         message: authErrorMessages(error.code),

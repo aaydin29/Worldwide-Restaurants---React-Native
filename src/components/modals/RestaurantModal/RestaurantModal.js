@@ -4,6 +4,8 @@ import Modal from 'react-native-modal';
 import Config from 'react-native-config';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AirbnbRating} from 'react-native-ratings';
+import auth from '@react-native-firebase/auth';
+import database from '@react-native-firebase/database';
 
 import styles from './RestaurantModal.style';
 
@@ -14,6 +16,28 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
 
   const iconUrl = restaurant.icon;
   const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${restaurant.photos[0].photo_reference}&key=${Config.API_KEY}`;
+
+  function handleAddFavorites() {
+    const userId = auth().currentUser.uid;
+    const restaurantData = {
+      name: restaurant.name,
+      address: restaurant.formatted_address,
+      rating: restaurant.rating,
+      photoUrl: photoUrl,
+      opening_hours: restaurant.opening_hours.open_now,
+      icon: iconUrl,
+      ratingTotal: restaurant.user_ratings_total,
+    };
+    const newRef = database().ref(`users/${userId}/favorites`).push();
+    newRef
+      .set(restaurantData)
+      .then(() =>
+        console.log("Favori verileri firebase database'e başarıyla gönderildi"),
+      )
+      .catch(error =>
+        console.log('Favori verileri gönderirken bir hata oluştu: ', error),
+      );
+  }
 
   return (
     <Modal
@@ -63,7 +87,12 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
             </Text>
           </View>
           <TouchableOpacity>
-            <Icon name="heart" size={30} color="gray" />
+            <Icon
+              name="heart"
+              size={30}
+              color="gray"
+              onPress={handleAddFavorites}
+            />
           </TouchableOpacity>
         </View>
       </View>

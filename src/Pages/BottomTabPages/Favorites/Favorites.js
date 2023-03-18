@@ -5,7 +5,7 @@ import {showMessage} from 'react-native-flash-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import AuthModal from '../../../components/modals/AuthModal/AuthModal';
-
+import FavRestaurantCard from '../../../components/cards/FavRestaurantCard/FavRestaurantCard';
 import styles from './Favorites.style';
 
 const Favorites = () => {
@@ -30,7 +30,16 @@ const Favorites = () => {
   }, []);
 
   function handleLogout() {
-    auth().signOut();
+    if (userSession) {
+      auth().signOut();
+    } else {
+      showMessage({
+        message: 'You are not logged in yet!',
+        type: 'warning',
+        floating: true,
+        duration: 3500,
+      });
+    }
   }
 
   return (
@@ -41,7 +50,7 @@ const Favorites = () => {
       </View>
       {userSession ? (
         <View>
-          <Text>FAVORİLER</Text>
+          <FavRestaurantCard />
         </View>
       ) : (
         <AuthModal
