@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {View, Text, Image, TouchableOpacity} from 'react-native';
 import Modal from 'react-native-modal';
 import Config from 'react-native-config';
@@ -6,10 +6,13 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import {AirbnbRating} from 'react-native-ratings';
 import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
+import {showMessage} from 'react-native-flash-message';
 
 import styles from './RestaurantModal.style';
+import AuthModal from '../AuthModal/AuthModal';
 
 const RestaurantModal = ({isVisible, onClose, restaurant}) => {
+  const [authVisible, setAuthVisible] = useState(false);
   if (!restaurant || !restaurant.photos || restaurant.photos.length === 0) {
     return null;
   }
@@ -18,6 +21,18 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
   const photoUrl = `https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photoreference=${restaurant.photos[0].photo_reference}&key=${Config.API_KEY}`;
 
   function handleAddFavorites() {
+    const user = auth().currentUser;
+    if (!user) {
+      showMessage({
+        message: 'Please login to add to favorites!',
+        type: 'danger',
+        floating: true,
+        duration: 3500,
+      });
+      setAuthVisible(true);
+      return;
+    }
+
     const userId = auth().currentUser.uid;
     const restaurantData = {
       name: restaurant.name,
@@ -32,10 +47,20 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
     newRef
       .set(restaurantData)
       .then(() =>
-        console.log("Favori verileri firebase database'e başarıyla gönderildi"),
+        showMessage({
+          message: 'Successfully added to Favorites!',
+          type: 'success',
+          floating: true,
+          duration: 3500,
+        }),
       )
       .catch(error =>
-        console.log('Favori verileri gönderirken bir hata oluştu: ', error),
+        showMessage({
+          message: 'Something went wrong!',
+          type: 'danger',
+          floating: true,
+          duration: 3500,
+        }),
       );
   }
 
@@ -96,6 +121,10 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
           </TouchableOpacity>
         </View>
       </View>
+      <AuthModal
+        isVisible={authVisible}
+        onClose={() => setAuthVisible(false)}
+      />
     </Modal>
   );
 };

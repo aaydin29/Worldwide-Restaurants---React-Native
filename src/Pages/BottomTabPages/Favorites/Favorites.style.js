@@ -12,6 +12,10 @@ export default StyleSheet.create({
   header_text: {
     color: 'white',
     fontWeight: 'bold',
-    fontSize: 18,
+    fontSize: 20,
+    flex: 1,
+  },
+  login_icon: {
+    marginRight: 15,
   },
 });

@@ -42,10 +42,21 @@ const Favorites = () => {
     }
   }
 
+  function handleLogin() {
+    setModalVisible(true);
+  }
+
   return (
     <ScrollView>
       <View style={styles.header_container}>
         <Text style={styles.header_text}>Favorites</Text>
+        <Icon
+          name="account"
+          size={35}
+          color="white"
+          onPress={handleLogin}
+          style={styles.login_icon}
+        />
         <Icon name="logout" size={30} color="white" onPress={handleLogout} />
       </View>
       {userSession ? (

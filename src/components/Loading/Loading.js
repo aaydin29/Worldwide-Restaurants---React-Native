@@ -12,7 +12,6 @@ const Loading = () => {
 const styles = StyleSheet.create({
   container: {
     position: 'absolute',
-    // backgroundColor: 'red',
     bottom: 80,
     alignSelf: 'center',
   },

@@ -6,6 +6,7 @@ export default StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     padding: 10,
+    backgroundColor: '#e0e0e0',
   },
   info_container: {
     flexDirection: 'row',
@@ -20,9 +21,10 @@ export default StyleSheet.create({
     flex: 1,
   },
   name: {
-    fontSize: 16,
+    fontSize: 17,
     fontWeight: 'bold',
     marginLeft: 15,
+    color: '#263238',
   },
   rating_container: {
     marginTop: 5,
@@ -32,6 +34,7 @@ export default StyleSheet.create({
   },
   rating: {
     marginLeft: 10,
+    color: '#263238',
   },
   restaurant_icon: {
     width: 30,
@@ -39,10 +42,10 @@ export default StyleSheet.create({
     borderRadius: 10,
   },
   button_text: {
-    color: 'blue',
+    color: '#1976D2',
     fontWeight: 'bold',
     marginTop: 20,
-    backgroundColor: 'yellow',
+    fontSize: 14,
     alignSelf: 'center',
   },
   remove_icon: {
@@ -65,6 +68,7 @@ export default StyleSheet.create({
     borderRadius: 7,
     padding: 4,
     marginRight: 7,
+    marginLeft: 10,
   },
   status_circle_green: {
     backgroundColor: 'green',
@@ -73,5 +77,8 @@ export default StyleSheet.create({
   status_circle_orange: {
     backgroundColor: 'orange',
     borderColor: 'orange',
+  },
+  address: {
+    fontWeight: '700',
   },
 });

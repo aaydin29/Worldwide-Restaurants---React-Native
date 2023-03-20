@@ -16,6 +16,8 @@ const FavRestaurantCard = () => {
     setRestaurantData(updatedRestaurants);
   };
 
+  function handleRemoveFavorites() {}
+
   useEffect(() => {
     const userId = auth().currentUser.uid;
     const favoritesRef = database().ref(`users/${userId}/favorites`);
@@ -66,6 +68,7 @@ const FavRestaurantCard = () => {
                 color="red"
                 size={25}
                 style={styles.remove_icon}
+                onPress={handleRemoveFavorites}
               />
             </View>
             {restaurant.showMore && (
@@ -89,7 +92,9 @@ const FavRestaurantCard = () => {
                       {restaurant.opening_hours ? 'Open now' : 'Closed'}
                     </Text>
                   </View>
-                  <Text>Adress: {restaurant.address}</Text>
+                  <Text style={styles.address}>
+                    Adress: {restaurant.address}
+                  </Text>
                 </View>
               </>
             )}
