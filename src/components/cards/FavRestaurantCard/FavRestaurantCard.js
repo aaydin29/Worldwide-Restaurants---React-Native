@@ -16,7 +16,20 @@ const FavRestaurantCard = () => {
     setRestaurantData(updatedRestaurants);
   };
 
-  function handleRemoveFavorites() {}
+  function handleRemoveFavorites(index) {
+    const userId = auth().currentUser.uid;
+    const restaurantRef = database().ref(`users/${userId}/favorites/${userId}`);
+    restaurantRef
+      .remove()
+      .then(() => {
+        console.log('Restaurant removed successfully');
+        const updatedRestaurants = restaurantData.filter((_, i) => i !== index);
+        setRestaurantData(updatedRestaurants);
+      })
+      .catch(error => {
+        console.log('Error removing restaurant:', error.message);
+      });
+  }
 
   useEffect(() => {
     const userId = auth().currentUser.uid;
@@ -62,13 +75,12 @@ const FavRestaurantCard = () => {
                   <Text style={styles.button_text}>Show more</Text>
                 </TouchableOpacity>
               </View>
-
               <Icon
                 name="remove"
                 color="red"
                 size={25}
                 style={styles.remove_icon}
-                onPress={handleRemoveFavorites}
+                onPress={() => handleRemoveFavorites(index)}
               />
             </View>
             {restaurant.showMore && (

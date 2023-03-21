@@ -6,6 +6,7 @@ import styles from './Map.style';
 import Loading from '../../../components/Loading/Loading';
 import useFetch from '../../../hooks/useFetch';
 import RestaurantModal from '../../../components/modals/RestaurantModal/RestaurantModal';
+import SearchBar from '../../../components/SearchBar/SearchBar';
 
 const App = () => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -95,6 +96,9 @@ const App = () => {
         {data && renderRestaurantsMarker()}
       </MapView>
       {loading && <Loading />}
+      <View style={styles.searchBar}>
+        <SearchBar />
+      </View>
       <RestaurantModal
         isVisible={modalVisible}
         onClose={handleModalVisible}
