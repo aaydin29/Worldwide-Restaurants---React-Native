@@ -60,13 +60,7 @@ const Favorites = () => {
       </View>
       {userSession ? (
         <View>
-          {FavRestaurantCard && FavRestaurantCard.length > 0 ? (
-            <FavRestaurantCard />
-          ) : (
-            <Text style={styles.no_favorites}>
-              You don't have a favorite restaurant yet!
-            </Text>
-          )}
+          <FavRestaurantCard />
         </View>
       ) : (
         <AuthModal
