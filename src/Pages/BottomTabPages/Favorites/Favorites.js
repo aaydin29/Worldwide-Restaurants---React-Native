@@ -1,5 +1,5 @@
 import React, {useState, useEffect} from 'react';
-import {View, Text, TouchableOpacity, ScrollView} from 'react-native';
+import {View, Text, ScrollView} from 'react-native';
 import auth from '@react-native-firebase/auth';
 import {showMessage} from 'react-native-flash-message';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -21,7 +21,6 @@ const Favorites = () => {
           message: 'You must be logged in to see your favourites!',
           type: 'warning',
           floating: true,
-          duration: 3500,
         });
       } else {
         setModalVisible(false);
@@ -37,7 +36,6 @@ const Favorites = () => {
         message: 'You are not logged in yet!',
         type: 'warning',
         floating: true,
-        duration: 3500,
       });
     }
   }

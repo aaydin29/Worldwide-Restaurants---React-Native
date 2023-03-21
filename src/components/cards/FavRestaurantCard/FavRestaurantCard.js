@@ -4,6 +4,7 @@ import auth from '@react-native-firebase/auth';
 import database from '@react-native-firebase/database';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {AirbnbRating} from 'react-native-ratings';
+import {showMessage} from 'react-native-flash-message';
 
 import styles from './FavRestaurantCard.style';
 
@@ -18,16 +19,22 @@ const FavRestaurantCard = () => {
 
   function handleRemoveFavorites(index) {
     const userId = auth().currentUser.uid;
-    const restaurantRef = database().ref(`users/${userId}/favorites/${userId}`);
+    const restaurant = restaurantData[index];
+    const restaurantRef = database().ref(
+      `users/${userId}/favorites/${restaurant.index}`,
+    );
     restaurantRef
       .remove()
       .then(() => {
-        console.log('Restaurant removed successfully');
         const updatedRestaurants = restaurantData.filter((_, i) => i !== index);
         setRestaurantData(updatedRestaurants);
       })
       .catch(error => {
-        console.log('Error removing restaurant:', error.message);
+        showMessage({
+          message: 'Something went wrong!',
+          type: 'danger',
+          floating: true,
+        });
       });
   }
 

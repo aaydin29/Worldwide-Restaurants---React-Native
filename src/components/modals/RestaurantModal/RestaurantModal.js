@@ -13,6 +13,7 @@ import AuthModal from '../AuthModal/AuthModal';
 
 const RestaurantModal = ({isVisible, onClose, restaurant}) => {
   const [authVisible, setAuthVisible] = useState(false);
+  const [isFavorite, setIsFavorite] = useState(false);
   if (!restaurant || !restaurant.photos || restaurant.photos.length === 0) {
     return null;
   }
@@ -27,7 +28,6 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
         message: 'Please login to add to favorites!',
         type: 'danger',
         floating: true,
-        duration: 3500,
       });
       setAuthVisible(true);
       return;
@@ -43,25 +43,43 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
       icon: iconUrl,
       ratingTotal: restaurant.user_ratings_total,
     };
-    const newRef = database().ref(`users/${userId}/favorites`).push();
-    newRef
-      .set(restaurantData)
-      .then(() =>
-        showMessage({
-          message: 'Successfully added to Favorites!',
-          type: 'success',
-          floating: true,
-          duration: 3500,
-        }),
-      )
-      .catch(error =>
-        showMessage({
-          message: 'Something went wrong!',
-          type: 'danger',
-          floating: true,
-          duration: 3500,
-        }),
-      );
+
+    const favoriteRef = database().ref(`users/${userId}/favorites`);
+    favoriteRef.once('value', snapshot => {
+      const favorites = snapshot.val();
+      for (let key in favorites) {
+        if (
+          favorites[key].name === restaurant.name &&
+          favorites[key].address === restaurant.formatted_address
+        ) {
+          showMessage({
+            message: 'This restaurant is already in favorites!',
+            type: 'warning',
+            floating: true,
+          });
+          return;
+        }
+      }
+
+      const newRef = favoriteRef.push();
+      newRef
+        .set(restaurantData)
+        .then(() => {
+          setIsFavorite(true);
+          showMessage({
+            message: 'Successfully added to Favorites!',
+            type: 'success',
+            floating: true,
+          });
+        })
+        .catch(error =>
+          showMessage({
+            message: 'Something went wrong!',
+            type: 'danger',
+            floating: true,
+          }),
+        );
+    });
   }
 
   return (
@@ -115,7 +133,7 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
             <Icon
               name="heart"
               size={30}
-              color="gray"
+              color={isFavorite ? 'orange' : 'gray'}
               onPress={handleAddFavorites}
             />
           </TouchableOpacity>

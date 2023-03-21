@@ -8,7 +8,7 @@ import useFetch from '../../../hooks/useFetch';
 import RestaurantModal from '../../../components/modals/RestaurantModal/RestaurantModal';
 import SearchBar from '../../../components/SearchBar/SearchBar';
 
-const App = () => {
+const Map = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [selectedRestaurant, setSelectedRestaurant] = useState(null);
   const {data, loading} = useFetch();
@@ -16,72 +16,39 @@ const App = () => {
 
   const renderRestaurantsMarker = () => {
     if (data && data.results) {
-      return data.results.map(
-        ({
-          geometry,
-          name,
-          place_id,
-          photos,
-          rating,
-          formatted_address,
-          user_ratings_total,
-          opening_hours,
-          icon,
-        }) => {
-          return (
-            <Marker
-              key={place_id}
-              coordinate={{
-                latitude: geometry.location.lat,
-                longitude: geometry.location.lng,
-              }}
-              title={name}
-              onPress={() =>
-                handleMarkerSelect({
-                  geometry,
-                  name,
-                  place_id,
-                  photos,
-                  rating,
-                  formatted_address,
-                  user_ratings_total,
-                  opening_hours,
-                  icon,
-                })
-              }
-            />
-          );
-        },
-      );
+      return data.results.map(restaurant => {
+        return (
+          <Marker
+            key={restaurant.place_id}
+            coordinate={{
+              latitude: restaurant.geometry.location.lat,
+              longitude: restaurant.geometry.location.lng,
+            }}
+            title={restaurant.name}
+            onPress={() => handleMarkerSelect(restaurant)}
+          />
+        );
+      });
     } else {
       return null;
     }
   };
 
-  const handleMarkerSelect = ({
-    geometry,
-    name,
-    photos,
-    rating,
-    formatted_address,
-    user_ratings_total,
-    opening_hours,
-    icon,
-  }) => {
+  const handleMarkerSelect = restaurant => {
     mapRef.current.animateToRegion({
-      latitude: geometry.location.lat,
-      longitude: geometry.location.lng,
-      latitudeDelta: 0.5,
-      longitudeDelta: 0.5,
+      latitude: restaurant.geometry.location.lat,
+      longitude: restaurant.geometry.location.lng,
+      latitudeDelta: 5,
+      longitudeDelta: 5,
     });
     setSelectedRestaurant({
-      name,
-      photos,
-      rating,
-      formatted_address,
-      user_ratings_total,
-      opening_hours,
-      icon,
+      name: restaurant.name,
+      photos: restaurant.photos,
+      rating: restaurant.rating,
+      formatted_address: restaurant.formatted_address,
+      user_ratings_total: restaurant.user_ratings_total,
+      opening_hours: restaurant.opening_hours,
+      icon: restaurant.icon,
     });
     setModalVisible(true);
   };
@@ -108,4 +75,4 @@ const App = () => {
   );
 };
 
-export default App;
+export default Map;
