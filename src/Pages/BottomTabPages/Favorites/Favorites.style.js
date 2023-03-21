@@ -18,4 +18,10 @@ export default StyleSheet.create({
   login_icon: {
     marginRight: 15,
   },
+  no_favorites: {
+    margin: 10,
+    marginTop: 300,
+    textAlign: 'center',
+    fontSize: 15,
+  },
 });

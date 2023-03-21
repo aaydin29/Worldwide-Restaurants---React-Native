@@ -7,6 +7,7 @@ export default function useFetch() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    // This function is used to pull data with the Google Place API.
     const fetchData = async () => {
       const url = 'https://maps.googleapis.com/maps/api/place/textsearch/json';
       const config = {

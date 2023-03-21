@@ -39,6 +39,7 @@ const FavRestaurantCard = () => {
   }
 
   useEffect(() => {
+    // It pulls to favorites data from database and set to state.
     const userId = auth().currentUser.uid;
     const favoritesRef = database().ref(`users/${userId}/favorites`);
     favoritesRef.on('value', snapshot => {

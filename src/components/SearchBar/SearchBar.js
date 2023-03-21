@@ -13,6 +13,7 @@ const SearchBar = () => {
   return (
     <View style={styles.container}>
       <GooglePlacesAutocomplete
+        // This library automatically displays results that match the text the user enters into the input.
         placeholder="Search restaurants..."
         styles={styles.input}
         onPress={(data, details = null) => {

@@ -13,6 +13,7 @@ const Favorites = () => {
   const [userSession, setUserSession] = useState();
 
   useEffect(() => {
+    // It checks if the user is logged in, if not, it shows the AuthModal.
     auth().onAuthStateChanged(user => {
       setUserSession(user);
       if (!user) {
@@ -59,7 +60,13 @@ const Favorites = () => {
       </View>
       {userSession ? (
         <View>
-          <FavRestaurantCard />
+          {FavRestaurantCard && FavRestaurantCard.length > 0 ? (
+            <FavRestaurantCard />
+          ) : (
+            <Text style={styles.no_favorites}>
+              You don't have a favorite restaurant yet!
+            </Text>
+          )}
         </View>
       ) : (
         <AuthModal

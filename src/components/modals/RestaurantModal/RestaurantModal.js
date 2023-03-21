@@ -24,6 +24,7 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
   function handleAddFavorites() {
     const user = auth().currentUser;
     if (!user) {
+      // If the user is not logged in, an error message will appear on the screen that they cannot add to favorites and show AuthModal.
       showMessage({
         message: 'Please login to add to favorites!',
         type: 'danger',
@@ -49,6 +50,7 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
       const favorites = snapshot.val();
       for (let key in favorites) {
         if (
+          // It checks that the same restaurant is not added twice.
           favorites[key].name === restaurant.name &&
           favorites[key].address === restaurant.formatted_address
         ) {
@@ -62,6 +64,7 @@ const RestaurantModal = ({isVisible, onClose, restaurant}) => {
       }
 
       const newRef = favoriteRef.push();
+      // It sends the selected restaurant to the database as a favourite.
       newRef
         .set(restaurantData)
         .then(() => {

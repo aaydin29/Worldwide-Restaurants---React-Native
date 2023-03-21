@@ -15,6 +15,7 @@ const Map = () => {
   const mapRef = useRef();
 
   const renderRestaurantsMarker = () => {
+    // It allows the markers to be listed on the screen.
     if (data && data.results) {
       return data.results.map(restaurant => {
         return (
@@ -36,12 +37,14 @@ const Map = () => {
 
   const handleMarkerSelect = restaurant => {
     mapRef.current.animateToRegion({
+      //When the marker is selected, the screen moves towards the marker.
       latitude: restaurant.geometry.location.lat,
       longitude: restaurant.geometry.location.lng,
       latitudeDelta: 5,
       longitudeDelta: 5,
     });
     setSelectedRestaurant({
+      // It sends the data of the selected restaurant to the RestaurantModal.
       name: restaurant.name,
       photos: restaurant.photos,
       rating: restaurant.rating,

@@ -55,7 +55,6 @@ export default StyleSheet.create({
   more_info_container: {
     marginTop: 10,
     marginHorizontal: 3,
-    // backgroundColor: 'yellow',
   },
   openHour_icon_container: {
     flexDirection: 'row',

@@ -38,8 +38,6 @@ const Router = () => {
 const tabBarOptions = () => ({
   tabBarShowLabel: false,
   headerShown: false,
-  //   tabBarInactiveBackgroundColor: 'white',
-  //   tabBarActiveBackgroundColor: '#263238',
 });
 
 const mapOptions = () => ({
